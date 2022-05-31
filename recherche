@@ -1,0 +1,11 @@
+
+ioctl :
+C'est plus clair quand on comprend que ça veut dire « I/O Control ». Ça sert à modifier les paramètres d'un descripteur de fichiers qui ne s'appliquent pas directement aux données.
+
+Par exemple, si tu ouvres le port série RS-232 via « /dev/ttyS0 », tu vas utiliser read() et write() pour respectivement recevoir ou envoyer des données, et tu vas utiliser ioctl() pour contrôler la vitesse de transmission de ton port, et autres paramètres. D'une manière générale, ça sert à manipuler dans un fichier spécial (un « /dev ») tout ce qui ne peut pas se passer directement avec open().
+
+Donc, évidemment, c'est très dépendant de ce que tu ouvres et de ce que tu veux faire. Le premier paramètre est le descripteur de fichier à manipuler, le second le nom de l'action à effectuer, et les troisième et éventuels suivants des paramètres qui dépendent entièrement de l'action à faire. Généralement, c'est un pointeur vers une structure définie dans le contexte pour passer et recevoir les informations nécessaires.
+
+En l'occurrence, SIOCGIFFLAGS signifie « Sockets: I/O Controls : Get InterFace Flags ». Tous les symboles valides sont construits selon le même principe. Tant et si bien qu'ils semblent tous barbares de prime abord, mais qu'on parvient presque toujours à deviner leur signification après les premières lectures.
+
+C'est ce sur quoi s'appuie en grande partie la commande ifconfig. Naturellement, ioctl() peut s'appliquer à tous les autres domaines. Par exemple, c'est par ce biais que je gère le retour de force de mon joystick sous Linux. 
